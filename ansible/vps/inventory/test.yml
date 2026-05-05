@@ -1,0 +1,12 @@
+all:
+  hosts:
+    orbstack:
+      ansible_host: 127.0.0.1
+      ansible_port: 32222
+      ansible_user: hbauer
+      ansible_ssh_private_key_file: ~/.orbstack/ssh/id_ed25519
+      ansible_ssh_common_args: >-
+        -o StrictHostKeyChecking=no
+        -o UserKnownHostsFile=~/.orbstack/ssh/known_hosts
+        -o ProxyCommand="'/Applications/OrbStack.app/Contents/Frameworks/OrbStack Helper.app/Contents/MacOS/OrbStack Helper' ssh-proxy-fdpass 501"
+        -o ProxyUseFdpass=yes

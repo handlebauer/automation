@@ -1,0 +1,16 @@
+---
+- name: Validate hostname is provided
+  ansible.builtin.fail:
+    msg: "hostname is required — pass it with -e 'hostname=my-vps'"
+  when: hostname is not defined
+
+- name: Set hostname
+  ansible.builtin.hostname:
+    name: "{{ hostname }}"
+
+- name: Update /etc/hosts with hostname
+  ansible.builtin.lineinfile:
+    path: /etc/hosts
+    regexp: '^127\.0\.1\.1'
+    line: "127.0.1.1 {{ hostname }}"
+    state: present

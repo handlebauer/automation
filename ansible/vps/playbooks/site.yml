@@ -1,0 +1,18 @@
+---
+- name: Set up VPS
+  hosts: all
+  become: true
+  roles:
+    - create_user
+    - setup_ssh
+    - harden_ssh
+    - setup_ufw
+    - setup_fail2ban
+    - set_hostname
+    - set_timezone
+    - setup_swap
+    - apt_packages
+    - install_bun
+    - install_claude
+    - install_starship
+    - setup_dotfiles

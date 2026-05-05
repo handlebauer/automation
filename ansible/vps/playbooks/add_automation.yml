@@ -1,0 +1,6 @@
+---
+- name: Add automation user for ongoing Ansible access
+  hosts: all
+  become: true
+  roles:
+    - create_automation_user

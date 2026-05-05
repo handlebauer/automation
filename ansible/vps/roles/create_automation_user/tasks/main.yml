@@ -1,0 +1,30 @@
+---
+- name: Create user {{ automation_username }}
+  ansible.builtin.user:
+    name: "{{ automation_username }}"
+    shell: /bin/bash
+    create_home: true
+    state: present
+
+- name: Grant passwordless sudo to {{ automation_username }}
+  ansible.builtin.copy:
+    dest: "/etc/sudoers.d/{{ automation_username }}"
+    content: "{{ automation_username }} ALL=(ALL) NOPASSWD:ALL\n"
+    mode: "0440"
+    validate: "visudo -cf %s"
+
+- name: Create .ssh directory for {{ automation_username }}
+  ansible.builtin.file:
+    path: "/home/{{ automation_username }}/.ssh"
+    state: directory
+    owner: "{{ automation_username }}"
+    group: "{{ automation_username }}"
+    mode: "0700"
+
+- name: Deploy authorized_keys for {{ automation_username }}
+  ansible.builtin.copy:
+    src: authorized_keys
+    dest: "/home/{{ automation_username }}/.ssh/authorized_keys"
+    owner: "{{ automation_username }}"
+    group: "{{ automation_username }}"
+    mode: "0600"

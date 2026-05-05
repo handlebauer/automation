@@ -1,0 +1,19 @@
+---
+- name: Test VPS setup (skips user/SSH roles)
+  hosts: all
+  become: true
+  vars:
+    hostname: orbstack-test
+    username: hbauer
+    ssh_port: "22"
+  roles:
+    - setup_ufw
+    - setup_fail2ban
+    - set_hostname
+    - set_timezone
+    - setup_swap
+    - apt_packages
+    - install_bun
+    - install_claude
+    - install_starship
+    - setup_dotfiles

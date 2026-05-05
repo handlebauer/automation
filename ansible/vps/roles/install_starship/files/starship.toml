@@ -1,0 +1,13 @@
+add_newline = false
+format = "${directory}${character}"
+
+[directory]
+truncation_length = 3
+truncation_symbol = ".../"
+style = "bold green"
+format = "[$path]($style)"
+
+[character]
+success_symbol = "[❯](bold green)"
+error_symbol = "[❯](bold red)"
+format = "$symbol "

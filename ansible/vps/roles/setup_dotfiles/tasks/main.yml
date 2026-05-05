@@ -1,0 +1,17 @@
+---
+- name: Deploy .bashrc.d directory for {{ username }}
+  ansible.builtin.copy:
+    src: .bashrc.d/
+    dest: "/home/{{ username }}/.bashrc.d/"
+    owner: "{{ username }}"
+    group: "{{ username }}"
+    mode: "0644"
+    directory_mode: "0755"
+
+- name: Deploy .bashrc for {{ username }}
+  ansible.builtin.copy:
+    src: .bashrc
+    dest: "/home/{{ username }}/.bashrc"
+    owner: "{{ username }}"
+    group: "{{ username }}"
+    mode: "0644"

@@ -1,0 +1,25 @@
+---
+- name: Check if Claude is installed
+  ansible.builtin.stat:
+    path: "/home/{{ username }}/.local/bin/claude"
+  register: claude_bin
+
+- name: Download Claude installer
+  ansible.builtin.get_url:
+    url: https://claude.ai/install.sh
+    dest: /tmp/install_claude.sh
+    mode: "0755"
+  when: not claude_bin.stat.exists
+
+- name: Install Claude for {{ username }}
+  ansible.builtin.shell:
+    cmd: bash /tmp/install_claude.sh
+  become: true
+  become_user: "{{ username }}"
+  when: not claude_bin.stat.exists
+
+- name: Remove installer
+  ansible.builtin.file:
+    path: /tmp/install_claude.sh
+    state: absent
+  when: not claude_bin.stat.exists

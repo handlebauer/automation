@@ -1,0 +1,8 @@
+---
+- name: Install bun for {{ username }}
+  ansible.builtin.shell:
+    cmd: curl -fsSL https://bun.sh/install | bash
+  become: true
+  become_user: "{{ username }}"
+  args:
+    creates: "/home/{{ username }}/.bun/bin/bun"

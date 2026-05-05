@@ -1,0 +1,8 @@
+---
+apt_packages:
+  - bat
+  - btop
+  - fzf
+  - hyperfine
+  - git
+  - unzip
