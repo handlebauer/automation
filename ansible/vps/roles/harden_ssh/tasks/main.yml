@@ -34,7 +34,14 @@
     line: "Port {{ ssh_port }}"
     state: present
 
-- name: Restart sshd
+- name: Check for ssh service name
+  ansible.builtin.command:
+    cmd: systemctl cat sshd
+  register: sshd_check
+  changed_when: false
+  failed_when: false
+
+- name: Restart SSH service
   ansible.builtin.systemd:
-    name: sshd
+    name: "{{ 'sshd' if sshd_check.rc == 0 else 'ssh' }}"
     state: restarted
