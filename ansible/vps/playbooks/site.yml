@@ -18,3 +18,4 @@
     - setup_dotfiles
     - setup_tailscale
     - setup_motd
+    - lockdown_ufw
