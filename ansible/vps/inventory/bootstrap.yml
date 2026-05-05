@@ -1,0 +1,14 @@
+all:
+  hosts:
+    # Add new VPS here with provider IP + root user, then run:
+    #   ansible-playbook playbooks/site.yml -i inventory/bootstrap.yml --ask-pass -e 'hostname=xxx' -e 'tailscale_key=xxx'
+    #
+    # After bootstrap, move the host to inventory/hosts.yml with its Tailscale IP.
+    #
+    # Example:
+    # my-vps:
+    #   ansible_host: 203.0.113.10
+    #   ansible_user: root
+  vars:
+    ansible_user: root
+    ansible_ssh_common_args: '-o StrictHostKeyChecking=accept-new'
