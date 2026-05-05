@@ -1,0 +1,11 @@
+---
+- name: Remove user {{ automation_username }}
+  ansible.builtin.user:
+    name: "{{ automation_username }}"
+    state: absent
+    remove: true
+
+- name: Remove sudoers file for {{ automation_username }}
+  ansible.builtin.file:
+    path: "/etc/sudoers.d/{{ automation_username }}"
+    state: absent

@@ -1,0 +1,6 @@
+---
+- name: Remove automation user
+  hosts: all
+  become: true
+  roles:
+    - remove_automation_user

@@ -60,6 +60,9 @@ ansible-playbook playbooks/add_automation.yml -u hbauer --limit my-vps
 
 # Install Docker CE
 ansible-playbook playbooks/add_docker.yml -u hbauer --limit my-vps
+
+# Remove the automation user (and its home directory + sudo access)
+ansible-playbook playbooks/remove_automation.yml -u hbauer --limit my-vps
 ```
 
 ## Configurable variables
