@@ -6,7 +6,7 @@ Ansible playbooks for bootstrapping and configuring Ubuntu VPSes from scratch.
 
 - Ansible installed on the local machine (`brew install ansible`)
 - A freshly provisioned VPS with a username (usually `root`) and IP address from the provider
-- The provider-assigned password for initial SSH access
+- The provider-assigned password or SSH key for initial access
 
 ## Bootstrapping a new VPS
 
@@ -24,13 +24,19 @@ all:
 
 ### 2. Run the bootstrap playbook
 
-The human will need to provide the root password from the VPS provider when prompted:
+If the provider gave a root password:
 
 ```sh
 ansible-playbook playbooks/site.yml --ask-pass -e 'hostname=my-vps'
 ```
 
-`--ask-pass` prompts for the SSH password interactively. This is the only time a password is needed — the playbook creates a key-only user (`hbauer`) with YubiKey SSH keys, then disables password auth and root login entirely.
+If the provider set up an SSH key instead:
+
+```sh
+ansible-playbook playbooks/site.yml --private-key ~/.ssh/id_whatever -e 'hostname=my-vps'
+```
+
+This is the only time provider credentials are needed — the playbook creates a key-only user (`hbauer`) with YubiKey SSH keys, then disables password auth and root login entirely.
 
 After bootstrap, SSH access is only possible as `hbauer` with a physical YubiKey.
 

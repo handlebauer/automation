@@ -10,3 +10,11 @@
     name: "{{ username }}"
     groups: docker
     append: true
+
+- name: Install lazydocker
+  ansible.builtin.shell:
+    cmd: curl -fsSL https://raw.githubusercontent.com/jesseduffield/lazydocker/master/scripts/install_update_linux.sh | bash
+  become: true
+  become_user: "{{ username }}"
+  args:
+    creates: "/home/{{ username }}/.local/bin/lazydocker"
