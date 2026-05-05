@@ -17,3 +17,4 @@
     - install_claude
     - install_starship
     - setup_dotfiles
+    - setup_motd

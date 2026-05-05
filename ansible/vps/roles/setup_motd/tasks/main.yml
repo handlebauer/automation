@@ -1,0 +1,39 @@
+---
+- name: Check if fastfetch is installed
+  ansible.builtin.command:
+    cmd: fastfetch --version
+  register: fastfetch_check
+  changed_when: false
+  failed_when: false
+
+- name: Get system architecture
+  ansible.builtin.command:
+    cmd: dpkg --print-architecture
+  register: dpkg_arch
+  changed_when: false
+  when: fastfetch_check.rc != 0
+
+- name: Install fastfetch from GitHub
+  ansible.builtin.apt:
+    deb: "https://github.com/fastfetch-cli/fastfetch/releases/latest/download/fastfetch-linux-{{ 'amd64' if dpkg_arch.stdout == 'amd64' else 'aarch64' }}.deb"
+    state: present
+  when: fastfetch_check.rc != 0
+
+- name: Disable default Ubuntu MOTD scripts
+  ansible.builtin.file:
+    path: "/etc/update-motd.d/{{ item }}"
+    mode: "0644"
+  loop:
+    - 10-help-text
+    - 50-motd-news
+    - 88-esm-announce
+    - 91-contract-ua-esm-status
+  failed_when: false
+
+- name: Add fastfetch to MOTD
+  ansible.builtin.copy:
+    dest: /etc/update-motd.d/01-fastfetch
+    mode: "0755"
+    content: |
+      #!/bin/bash
+      fastfetch --logo small --logo-color-1 yellow

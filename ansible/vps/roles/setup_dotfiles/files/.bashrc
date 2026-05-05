@@ -20,3 +20,6 @@
 
 # Prompt
 [ -f ~/.bashrc.d/prompt.bash ] && . ~/.bashrc.d/prompt.bash
+
+# MOTD
+command -v fastfetch &>/dev/null && fastfetch --logo small --logo-color-1 yellow
