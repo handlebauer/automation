@@ -2,7 +2,9 @@
 apt_packages:
   - bat
   - btop
+  - duf
   - fzf
   - hyperfine
+  - ncdu
   - git
   - unzip
