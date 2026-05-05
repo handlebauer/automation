@@ -3,8 +3,10 @@
   hosts: all
   become: true
   roles:
+    - wait_for_apt
     - create_user
     - setup_ssh
+    - create_automation_user
     - harden_ssh
     - setup_ufw
     - setup_fail2ban

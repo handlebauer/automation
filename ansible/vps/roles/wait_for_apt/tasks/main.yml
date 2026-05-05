@@ -1,0 +1,6 @@
+---
+- name: Wait for apt lock to be released
+  ansible.builtin.shell:
+    cmd: while fuser /var/lib/dpkg/lock-frontend >/dev/null 2>&1; do sleep 5; done
+  changed_when: false
+  timeout: 300
