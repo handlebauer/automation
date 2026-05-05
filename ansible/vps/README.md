@@ -27,18 +27,20 @@ all:
 If the provider gave a root password:
 
 ```sh
-ansible-playbook playbooks/site.yml --ask-pass -e 'hostname=my-vps'
+ansible-playbook playbooks/site.yml --ask-pass -e 'hostname=my-vps' -e 'tailscale_key=tskey-auth-XXXXX'
 ```
 
 If the provider set up an SSH key instead:
 
 ```sh
-ansible-playbook playbooks/site.yml --private-key ~/.ssh/id_whatever -e 'hostname=my-vps'
+ansible-playbook playbooks/site.yml --private-key ~/.ssh/id_whatever -e 'hostname=my-vps' -e 'tailscale_key=tskey-auth-XXXXX'
 ```
 
 This is the only time provider credentials are needed — the playbook creates a key-only user (`hbauer`) with YubiKey SSH keys, then disables password auth and root login entirely.
 
-After bootstrap, SSH access is only possible as `hbauer` with a physical YubiKey.
+After bootstrap, SSH access is only possible as `hbauer` with a physical YubiKey (or via Tailscale SSH).
+
+Generate a Tailscale auth key at https://login.tailscale.com/admin/settings/keys before running the playbook.
 
 ### 3. Update the inventory for future runs
 
@@ -77,7 +79,8 @@ All variables have sensible defaults. Override per-host in `host_vars/<hostname>
 
 | Variable | Default | Used by |
 |---|---|---|
-| `hostname` | *(required at runtime)* | `set_hostname` |
+| `hostname` | *(required at runtime)* | `set_hostname`, `setup_tailscale` |
+| `tailscale_key` | *(required at runtime)* | `setup_tailscale` |
 | `username` | `hbauer` | Most roles |
 | `ssh_port` | `22` | `harden_ssh`, `setup_ufw` |
 | `timezone` | `UTC` | `set_timezone` |
