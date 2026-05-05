@@ -4,7 +4,9 @@ apt_packages:
   - btop
   - duf
   - fzf
-  - hyperfine
-  - ncdu
   - git
+  - hyperfine
+  - jq
+  - ncdu
+  - tree
   - unzip
