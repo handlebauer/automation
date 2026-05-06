@@ -12,6 +12,7 @@
     - setup_fail2ban
     - set_hostname
     - set_timezone
+    - setup_sysctl
     - setup_swap
     - apt_packages
     - install_yabs

@@ -1,0 +1,12 @@
+---
+- name: Deploy sysctl hardening config
+  ansible.builtin.copy:
+    src: 99-hardened.conf
+    dest: /etc/sysctl.d/99-hardened.conf
+    mode: "0644"
+  register: sysctl_config
+
+- name: Apply sysctl settings
+  ansible.builtin.command:
+    cmd: sysctl --system
+  when: sysctl_config.changed
