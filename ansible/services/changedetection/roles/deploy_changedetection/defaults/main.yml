@@ -2,3 +2,8 @@
 service_user: hbauer
 changedetection_port: 5000
 changedetection_tz: UTC
+changedetection_fetch_workers: 10
+changedetection_max_chrome: 10
+
+# Discord notification (optional — pass at runtime with -e)
+# changedetection_discord_webhook: "https://discord.com/api/webhooks/ID/TOKEN"

@@ -1,0 +1,31 @@
+{
+  "username": "Change Detector",
+  "embeds": [
+    {
+      "title": {{ watch_title|tojson }},
+      "url": "{{ preview_url }}",
+      "description": {{ diff_clean(lines=10)|tojson }},
+      "color": 16744272,
+      "fields": [
+        {
+          "name": "Added",
+          "value": {{ diff_added_clean(lines=5)|default("\u2014", true)|tojson }},
+          "inline": true
+        },
+        {
+          "name": "Removed",
+          "value": {{ diff_removed_clean(lines=5)|default("\u2014", true)|tojson }},
+          "inline": true
+        },
+        {
+          "name": "URL",
+          "value": "{{ watch_url }}",
+          "inline": false
+        }
+      ],
+      "footer": {
+        "text": "changedetection.io \u2022 {{ change_datetime }}"
+      }
+    }
+  ]
+}

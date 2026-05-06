@@ -16,6 +16,14 @@
     mode: "0644"
   register: compose_file
 
+- name: Deploy Discord notification template
+  ansible.builtin.copy:
+    src: discord-notification.json
+    dest: "/home/{{ service_user }}/services/changedetection/discord-notification.json"
+    owner: "{{ service_user }}"
+    group: "{{ service_user }}"
+    mode: "0644"
+
 - name: Start changedetection
   ansible.builtin.command:
     cmd: docker compose up -d
@@ -32,3 +40,13 @@
   become_user: "{{ service_user }}"
   changed_when: false
   when: not compose_file.changed
+
+- name: Wait for changedetection to be ready
+  ansible.builtin.uri:
+    url: "http://127.0.0.1:{{ changedetection_port }}/"
+    status_code: [200, 302]
+  register: cd_health
+  retries: 15
+  delay: 5
+  until: cd_health.status in [200, 302]
+  when: compose_file.changed
