@@ -1,9 +1,4 @@
 ---
-- name: Validate tailscale_key is provided
-  ansible.builtin.fail:
-    msg: "tailscale_key is required — pass it with -e 'tailscale_key=tskey-auth-XXXXX'"
-  when: tailscale_key is not defined
-
 - name: Install Tailscale
   ansible.builtin.shell:
     cmd: curl -fsSL https://tailscale.com/install.sh | sh

@@ -25,6 +25,8 @@
     - install_starship
     - setup_git
     - setup_dotfiles
-    - setup_tailscale
+    - role: setup_tailscale
+      when: tailscale_key is defined
     - setup_motd
-    - lockdown_ufw
+    - role: lockdown_ufw
+      when: tailscale_key is defined

@@ -6,6 +6,9 @@ all:
     # After bootstrap, move the host to inventory/hosts.yml with its Tailscale IP.
     p-sea-1:
       ansible_host: 154.3.224.213
+    changedetection:
+      ansible_host: 32.192.193.218
+      ansible_ssh_private_key_file: ~/.ssh/id_automation
   vars:
     ansible_user: root
     ansible_ssh_common_args: '-o StrictHostKeyChecking=accept-new'
