@@ -1,3 +1,4 @@
 ---
 control_user: hbauer
+repo_url: https://github.com/handlebauer/automation.git
 repo_branch: main

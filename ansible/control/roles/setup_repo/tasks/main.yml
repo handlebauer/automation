@@ -1,9 +1,4 @@
 ---
-- name: Validate repo_url is provided
-  ansible.builtin.fail:
-    msg: "repo_url is required — pass it with -e 'repo_url=https://github.com/user/repo.git'"
-  when: repo_url is not defined
-
 - name: Clone automation repo
   ansible.builtin.git:
     repo: "{{ repo_url }}"

@@ -1,9 +1,4 @@
 ---
-- name: Validate automation_key_src is provided
-  ansible.builtin.fail:
-    msg: "automation_key_src is required — pass it with -e 'automation_key_src=~/.ssh/id_automation'"
-  when: automation_key_src is not defined
-
 - name: Create .ssh directory for {{ control_user }}
   ansible.builtin.file:
     path: "/home/{{ control_user }}/.ssh"

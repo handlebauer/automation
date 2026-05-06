@@ -1,2 +1,3 @@
 ---
 control_user: hbauer
+automation_key_src: ~/.ssh/id_automation
