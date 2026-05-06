@@ -1,0 +1,8 @@
+---
+- name: Set up Ansible control node
+  hosts: all
+  become: true
+  roles:
+    - install_ansible
+    - deploy_ssh_key
+    - setup_repo

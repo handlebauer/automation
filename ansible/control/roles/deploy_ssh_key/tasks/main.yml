@@ -1,0 +1,21 @@
+---
+- name: Validate automation_key_src is provided
+  ansible.builtin.fail:
+    msg: "automation_key_src is required — pass it with -e 'automation_key_src=~/.ssh/id_automation'"
+  when: automation_key_src is not defined
+
+- name: Create .ssh directory for {{ control_user }}
+  ansible.builtin.file:
+    path: "/home/{{ control_user }}/.ssh"
+    state: directory
+    owner: "{{ control_user }}"
+    group: "{{ control_user }}"
+    mode: "0700"
+
+- name: Deploy automation SSH key
+  ansible.builtin.copy:
+    src: "{{ automation_key_src }}"
+    dest: "/home/{{ control_user }}/.ssh/id_automation"
+    owner: "{{ control_user }}"
+    group: "{{ control_user }}"
+    mode: "0600"

@@ -1,0 +1,19 @@
+---
+- name: Install Ansible dependencies
+  ansible.builtin.apt:
+    name:
+      - software-properties-common
+      - python3-pip
+    state: present
+    update_cache: true
+
+- name: Add Ansible PPA
+  ansible.builtin.apt_repository:
+    repo: ppa:ansible/ansible
+    state: present
+
+- name: Install Ansible
+  ansible.builtin.apt:
+    name: ansible
+    state: present
+    update_cache: true
