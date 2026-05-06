@@ -18,6 +18,7 @@
     - install_bun
     - install_claude
     - install_starship
+    - setup_git
     - setup_dotfiles
     - setup_tailscale
     - setup_motd
