@@ -1,0 +1,4 @@
+---
+service_user: hbauer
+changedetection_port: 5000
+changedetection_tz: UTC

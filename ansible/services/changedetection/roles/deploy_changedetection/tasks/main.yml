@@ -1,0 +1,34 @@
+---
+- name: Create changedetection directory
+  ansible.builtin.file:
+    path: "/home/{{ service_user }}/services/changedetection"
+    state: directory
+    owner: "{{ service_user }}"
+    group: "{{ service_user }}"
+    mode: "0755"
+
+- name: Deploy docker-compose.yml
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "/home/{{ service_user }}/services/changedetection/docker-compose.yml"
+    owner: "{{ service_user }}"
+    group: "{{ service_user }}"
+    mode: "0644"
+  register: compose_file
+
+- name: Start changedetection
+  ansible.builtin.command:
+    cmd: docker compose up -d
+    chdir: "/home/{{ service_user }}/services/changedetection"
+  become: true
+  become_user: "{{ service_user }}"
+  when: compose_file.changed
+
+- name: Ensure changedetection is running
+  ansible.builtin.command:
+    cmd: docker compose up -d
+    chdir: "/home/{{ service_user }}/services/changedetection"
+  become: true
+  become_user: "{{ service_user }}"
+  changed_when: false
+  when: not compose_file.changed
