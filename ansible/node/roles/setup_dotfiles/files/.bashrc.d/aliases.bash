@@ -12,7 +12,9 @@ alias mkdir="mkdir -pv"
 # Git
 alias g="git"
 alias gp="git push"
+alias gf="git fetch"
 alias gl="git pull"
+alias gco="git checkout"
 alias gdev="git checkout dev && git pull"
 
 # Bun
