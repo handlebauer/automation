@@ -18,6 +18,7 @@
     - install_awscli
     - install_bun
     - install_just
+    - install_cloudflared
     - install_node
     - install_claude
     - install_starship
