@@ -8,5 +8,6 @@ apt_packages:
   - hyperfine
   - jq
   - ncdu
+  - stress-ng
   - tree
   - unzip
