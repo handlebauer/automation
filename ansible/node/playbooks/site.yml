@@ -17,6 +17,7 @@
     - install_yabs
     - install_awscli
     - install_bun
+    - install_just
     - install_node
     - install_claude
     - install_starship

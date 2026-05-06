@@ -18,6 +18,7 @@ alias gco="git checkout"
 alias gdev="git checkout dev && git pull"
 
 # Bun
+alias dev="bun dev"
 alias bi="bun install"
 alias bb="bun run build"
 

@@ -1,0 +1,6 @@
+---
+- name: Install just
+  ansible.builtin.shell:
+    cmd: curl -fsSL https://just.systems/install.sh | bash -s -- --to /usr/local/bin
+  args:
+    creates: /usr/local/bin/just
