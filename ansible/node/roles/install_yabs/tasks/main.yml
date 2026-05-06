@@ -1,6 +1,6 @@
 ---
 - name: Install YABS benchmark script
   ansible.builtin.get_url:
-    url: https://yabs.sh
+    url: https://raw.githubusercontent.com/masonr/yet-another-bench-script/master/yabs.sh
     dest: /usr/local/bin/yabs
     mode: "0755"
