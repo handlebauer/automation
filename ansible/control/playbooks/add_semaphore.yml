@@ -1,6 +1,0 @@
----
-- name: Install Semaphore UI
-  hosts: all
-  become: true
-  roles:
-    - install_semaphore
