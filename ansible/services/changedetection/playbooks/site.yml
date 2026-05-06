@@ -5,3 +5,4 @@
   roles:
     - require_docker
     - deploy_changedetection
+    - setup_caddy
