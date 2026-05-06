@@ -15,6 +15,7 @@
     - setup_swap
     - apt_packages
     - install_yabs
+    - install_awscli
     - install_bun
     - install_claude
     - install_starship
