@@ -1,4 +1,31 @@
 ---
+- name: Validate changedetection_password is provided
+  ansible.builtin.fail:
+    msg: "changedetection_password is required — pass it with -e 'changedetection_password=xxx'"
+  when: changedetection_password is not defined
+
+- name: Check if salted pass already exists
+  ansible.builtin.shell:
+    cmd: grep -oP 'SALTED_PASS=\K.*' /home/{{ service_user }}/services/changedetection/docker-compose.yml
+  register: existing_salted_pass
+  changed_when: false
+  failed_when: false
+
+- name: Generate salted password hash
+  ansible.builtin.command:
+    cmd: >-
+      python3 -c "import hashlib,os,base64;
+      salt=os.urandom(32);
+      key=hashlib.pbkdf2_hmac('sha256','{{ changedetection_password }}'.encode(),salt,100000);
+      print(base64.b64encode(salt+key).decode())"
+  register: salted_pass_result
+  changed_when: false
+  when: existing_salted_pass.stdout | length == 0
+
+- name: Set salted pass fact
+  ansible.builtin.set_fact:
+    changedetection_salted_pass: "{{ existing_salted_pass.stdout if existing_salted_pass.stdout | length > 0 else salted_pass_result.stdout }}"
+
 - name: Allow changedetection port through UFW
   community.general.ufw:
     rule: allow

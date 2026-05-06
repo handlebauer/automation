@@ -15,6 +15,9 @@ services:
 {% if changedetection_base_url is defined %}
       - BASE_URL={{ changedetection_base_url }}
 {% endif %}
+{% if changedetection_salted_pass is defined %}
+      - SALTED_PASS={{ changedetection_salted_pass }}
+{% endif %}
     ports:
       - "{{ changedetection_port }}:5000"
     restart: unless-stopped
