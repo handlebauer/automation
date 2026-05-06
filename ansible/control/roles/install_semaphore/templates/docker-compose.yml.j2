@@ -1,0 +1,19 @@
+services:
+  semaphore:
+    image: semaphoreui/semaphore:latest
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:{{ semaphore_port }}:3000"
+    volumes:
+      - semaphore-data:/var/lib/semaphore
+      - /home/{{ control_user }}/.ssh/id_automation:/home/semaphore/.ssh/id_automation:ro
+      - /home/{{ control_user }}/automation:/home/semaphore/automation:ro
+    environment:
+      SEMAPHORE_DB_DIALECT: bolt
+      SEMAPHORE_ADMIN: "{{ semaphore_admin_user }}"
+      SEMAPHORE_ADMIN_EMAIL: "{{ semaphore_admin_email }}"
+      SEMAPHORE_ADMIN_NAME: "{{ semaphore_admin_user }}"
+      SEMAPHORE_ADMIN_PASSWORD: "{{ semaphore_admin_password }}"
+
+volumes:
+  semaphore-data:
