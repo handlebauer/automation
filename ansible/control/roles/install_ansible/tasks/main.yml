@@ -1,15 +1,15 @@
 ---
-- name: Install pipx
-  ansible.builtin.apt:
-    name:
-      - pipx
-      - python3-full
-    state: present
-    update_cache: true
+- name: Install uv
+  ansible.builtin.shell:
+    cmd: curl -fsSL https://astral.sh/uv/install.sh | sh
+  become: true
+  become_user: "{{ control_user }}"
+  args:
+    creates: "/home/{{ control_user }}/.local/bin/uv"
 
-- name: Install Ansible via pipx for {{ control_user }}
+- name: Install Ansible via uv tool
   ansible.builtin.command:
-    cmd: pipx install ansible --include-deps
-    creates: "/home/{{ control_user }}/.local/bin/ansible"
+    cmd: /home/{{ control_user }}/.local/bin/uv tool install ansible-core --with ansible
+    creates: "/home/{{ control_user }}/.local/bin/ansible-playbook"
   become: true
   become_user: "{{ control_user }}"
