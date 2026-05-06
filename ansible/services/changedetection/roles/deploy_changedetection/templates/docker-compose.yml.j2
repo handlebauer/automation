@@ -19,7 +19,7 @@ services:
       - SALTED_PASS={{ changedetection_salted_pass }}
 {% endif %}
     ports:
-      - "{{ changedetection_port }}:5000"
+      - "127.0.0.1:{{ changedetection_port }}:5000"
     restart: unless-stopped
     depends_on:
       browser-sockpuppet-chrome:
