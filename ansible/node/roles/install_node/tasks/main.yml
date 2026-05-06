@@ -1,0 +1,26 @@
+---
+- name: Create n directories for {{ username }}
+  ansible.builtin.file:
+    path: "/home/{{ username }}/n/bin"
+    state: directory
+    owner: "{{ username }}"
+    group: "{{ username }}"
+    mode: "0755"
+
+- name: Download n
+  ansible.builtin.get_url:
+    url: https://raw.githubusercontent.com/tj/n/master/bin/n
+    dest: "/home/{{ username }}/n/bin/n"
+    owner: "{{ username }}"
+    group: "{{ username }}"
+    mode: "0755"
+
+- name: Install Node.js LTS via n
+  ansible.builtin.shell:
+    cmd: "N_PREFIX=$HOME/n $HOME/n/bin/n lts"
+  become: true
+  become_user: "{{ username }}"
+  args:
+    creates: "/home/{{ username }}/n/bin/node"
+  environment:
+    N_PREFIX: "/home/{{ username }}/n"

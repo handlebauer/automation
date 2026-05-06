@@ -5,6 +5,10 @@ export EDITOR="vim"
 export TERM="xterm-256color"
 export CLICOLOR=1
 
+# Node (n)
+export N_PREFIX="$HOME/n"
+export PATH="$N_PREFIX/bin:$PATH"
+
 # Bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
