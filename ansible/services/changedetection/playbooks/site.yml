@@ -3,4 +3,5 @@
   hosts: all
   become: true
   roles:
+    - require_docker
     - deploy_changedetection

@@ -1,0 +1,12 @@
+---
+- name: Check Docker is installed
+  ansible.builtin.command:
+    cmd: docker --version
+  changed_when: false
+  register: docker_check
+  failed_when: false
+
+- name: Fail if Docker is not installed
+  ansible.builtin.fail:
+    msg: "Docker is not installed. Run ansible/node/playbooks/add_docker.yml first."
+  when: docker_check.rc != 0
