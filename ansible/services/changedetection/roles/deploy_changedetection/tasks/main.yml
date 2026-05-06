@@ -76,4 +76,33 @@
   retries: 15
   delay: 5
   until: cd_health.status in [200, 302]
-  when: compose_file.changed
+
+- name: Copy Discord template into container volume
+  ansible.builtin.command:
+    cmd: docker cp /home/{{ service_user }}/services/changedetection/discord-notification.json changedetection:/datastore/discord-notification.json
+  changed_when: false
+  when: changedetection_notification_url is defined
+
+- name: Configure notifications in datastore
+  ansible.builtin.shell:
+    cmd: |
+      docker exec changedetection python3 -c "
+      import json
+      with open('/datastore/changedetection.json', 'r') as f:
+          data = json.load(f)
+      body = open('/datastore/discord-notification.json').read()
+      data['settings']['application']['notification_urls'] = ['{{ changedetection_notification_url }}']
+      data['settings']['application']['notification_body'] = body
+      data['settings']['application']['notification_format'] = 'text'
+      with open('/datastore/changedetection.json', 'w') as f:
+          json.dump(data, f, indent=2)
+      "
+  when: changedetection_notification_url is defined
+
+- name: Restart changedetection to pick up config
+  ansible.builtin.command:
+    cmd: docker compose restart changedetection
+    chdir: "/home/{{ service_user }}/services/changedetection"
+  become: true
+  become_user: "{{ service_user }}"
+  when: changedetection_notification_url is defined
