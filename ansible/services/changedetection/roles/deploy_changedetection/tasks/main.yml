@@ -1,4 +1,10 @@
 ---
+- name: Allow changedetection port through UFW
+  community.general.ufw:
+    rule: allow
+    port: "{{ changedetection_port }}"
+    proto: tcp
+
 - name: Create changedetection directory
   ansible.builtin.file:
     path: "/home/{{ service_user }}/services/changedetection"
