@@ -9,31 +9,31 @@ Self-hosted website change detection and monitoring.
 
 ## Setup
 
-Add the target to `inventory/hosts.yml`, then:
-
 ```sh
 cd ansible/services/changedetection
-ansible-playbook playbooks/site.yml
+ansible-playbook playbooks/site.yml \
+  -e 'changedetection_domain=change-detection.example.com' \
+  -e 'changedetection_password=xxx' \
+  -e 'changedetection_notification_url=posts://discord.com/api/webhooks/ID/TOKEN?-format=text'
 ```
 
-Access at `http://<host-ip>:5000`.
+Access at `https://<changedetection_domain>`.
 
 ## Discord notifications
 
-A rich embed template is included at `roles/deploy_changedetection/files/discord-notification.json`. To use it:
+Configured automatically when `changedetection_notification_url` is provided. Uses a custom JSON embed template with added/removed diffs.
 
-1. In the changedetection.io UI, go to Settings > Notifications
-2. Set the notification URL to: `posts://discord.com/api/webhooks/YOUR_ID/YOUR_TOKEN`
-3. Paste the contents of `discord-notification.json` as the notification body
-
-The template shows the watch title, diff, added/removed lines, URL, and timestamp in a Discord embed.
+The notification URL **must** use `posts://` with `?-format=text` to prevent Apprise from appending query params that Discord rejects. Diff fields use `|tojson` to safely escape newlines and quotes in the JSON payload.
 
 ## Configurable variables
 
 | Variable | Default | Description |
 |---|---|---|
+| `changedetection_password` | *(required)* | UI login password |
+| `changedetection_domain` | *(required)* | Domain for Caddy reverse proxy |
+| `changedetection_notification_url` | *(optional)* | Apprise notification URL (use `posts://...?-format=text` for Discord) |
 | `service_user` | `hbauer` | User to own the service files |
-| `changedetection_port` | `5000` | Port to expose the web UI |
+| `changedetection_port` | `5000` | Internal port (Caddy proxies to this) |
 | `changedetection_tz` | `UTC` | Timezone for scheduling |
 | `changedetection_fetch_workers` | `10` | Parallel fetch workers |
 | `changedetection_max_chrome` | `10` | Max concurrent Chrome processes |

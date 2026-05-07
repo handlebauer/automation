@@ -94,6 +94,8 @@
       data['settings']['application']['notification_urls'] = ['{{ changedetection_notification_url }}']
       data['settings']['application']['notification_body'] = body
       data['settings']['application']['notification_format'] = 'text'
+      data['settings']['application']['all_muted'] = False
+      data['settings']['application']['all_paused'] = False
       with open('/datastore/changedetection.json', 'w') as f:
           json.dump(data, f, indent=2)
       "
